@@ -1,3 +1,4 @@
+# build
 language: scala
 
 jdk:
