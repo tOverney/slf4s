@@ -30,6 +30,7 @@ lazy val slf4s = (project in file(".")).settings(
     "org.scalatest" %% "scalatest" % "3.0.8" % Test,
     "org.mockito" % "mockito-core" % "2.7.22" % Test,
     "ch.qos.logback" % "logback-classic" % "1.2.3" % Test
-  )
+  ),
+  updateOptions := updateOptions.value.withGigahorse(false)
 )
 
