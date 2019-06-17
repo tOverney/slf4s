@@ -13,7 +13,7 @@ jobs:
     # stage="test" if no stage is specified
     - env: TEST="compile"
       script: sbt test:compile
-    - env: TEST="formatting"
+    - env: TEST="coverage"
       script: sbt clean coverage test coverageReport coveralls
     # run ci-release only if previous stages passed
     - stage: release
