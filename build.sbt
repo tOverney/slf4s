@@ -23,7 +23,14 @@ lazy val slf4s = (project in file(".")).settings(
   scalaVersion := "2.12.1",
   crossScalaVersions := List("2.13.0", "2.12.8", "2.11.12"),
   scalacOptions := Seq("-unchecked", "-deprecation", "-language:experimental.macros"),
-  version := "1.7.1",
+  version := {
+    if(CiReleasePlugin.travisBranch == "master")
+      "1.7.1-SNAPSHOT"
+    if(CiReleasePlugin.isTravisTag)
+      version.value
+    else
+      "1.7.1-SNAPSHOT"
+  },
   libraryDependencies ++= Seq(
     "org.scala-lang" % "scala-reflect" % scalaVersion.value,
     "org.slf4j" % "slf4j-api" % version.value,
