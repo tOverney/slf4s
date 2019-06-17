@@ -1,29 +1,39 @@
 language: scala
 
-scala:
-  - 2.12.1
-
 jdk:
   - oraclejdk8
 
-sudo: false
+stages:
+  - name: test
+  - name: release
+    if: ((branch = master AND type = push) OR (tag IS present)) AND NOT fork
+
+jobs:
+  include:
+    # stage="test" if no stage is specified
+    - env: TEST="compile"
+      script: sbt test:compile
+    - env: TEST="formatting"
+      script: sbt clean coverage test coverageReport coveralls
+    # run ci-release only if previous stages passed
+    - stage: release
+      script: sbt clean ci-release
+
+cache:
+  directories:
+    - $HOME/.sbt/1.0/dependency
+    - $HOME/.sbt/boot/scala*
+    - $HOME/.sbt/launchers
+    - $HOME/.ivy2/cache
+    - $HOME/.coursier
+
+before_cache:
+  - du -h -d 1 $HOME/.ivy2/cache
+  - du -h -d 2 $HOME/.sbt/
+  - find $HOME/.sbt -name "*.lock" -type f -delete
+  - find $HOME/.ivy2/cache -name "ivydata-*.properties" -type f -delete
+  - rm -rf $HOME/.ivy2/local
 
 before_install:
-  - openssl aes-256-cbc -pass pass:$PGP_PASSPHRASE -in secret.asc.enc -out local.secret.asc -d
-  - openssl aes-256-cbc -pass pass:$PGP_PASSPHRASE -in public.asc.enc -out local.public.asc -d
+  - git fetch --tags
 
-script: "sbt clean coverage test coverageReport"
-
-after_success: "sbt coveralls"
-
-deploy:
-  skip_cleanup: true
-  provider: script
-  script: sbt publishSigned sonatypeRelease
-  on:
-    tags: true
-
-env:
-  global:
-    - secure: "Km7zfQR5Q4auR1tWeVNLrdTgRcwCxndszN81LIIlrYiL9t7dh3rL/CzmT+N433grNB6Y6yZgRHiLCF3mhRjZk0rjDxvhrQ+1r1PRJZOSlKXre2PQSTq+xAGkeUpKAJKtbRKQ5nCwyNyOlniHnbkck6XIKklESkMCntA4g/Fn4Dw="
-    - secure: "GGrBEUcd+kuchKaGAP7LLZ/ZshtNKRuNWwOZZBxNduSRq4Q3t2eTrRhyjgO+wmfsni5SLNA/tpqvdrjU0FQGtO/UrUd+OweFJ4JQ1niTJbYuewEWRGXpXybo7HV3jeWMQt7RkJIYqOUwCNHZnSMV0xJNEyIXrX9XSVwfyNZpDDA="
