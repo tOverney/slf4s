@@ -10,12 +10,10 @@ stages:
 
 jobs:
   include:
-    # stage="test" if no stage is specified
     - env: TEST="test"
       script: sbt +test
     - env: TEST="coverage"
       script: sbt clean coverage test coverageReport coveralls
-    # run ci-release only if previous stages passed
     - stage: release
       script: sbt clean ci-release
 
