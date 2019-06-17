@@ -18,6 +18,8 @@ inThisBuild(List(
   )
 ))
 
+lazy val latestSlf4jVersion = "1.7.26"
+
 lazy val slf4s = (project in file(".")).settings(
   name := "slf4s-api",
   scalaVersion := "2.12.1",
@@ -25,19 +27,28 @@ lazy val slf4s = (project in file(".")).settings(
   scalacOptions := Seq("-unchecked", "-deprecation", "-language:experimental.macros"),
   version := {
     if(CiReleasePlugin.travisBranch == "master")
-      "1.7.1-SNAPSHOT"
-    if(CiReleasePlugin.isTravisTag)
+      s"$latestSlf4jVersion-SNAPSHOT"
+    else if(CiReleasePlugin.isTravisTag)
       version.value
     else
-      "1.7.1-SNAPSHOT"
+      s"$latestSlf4jVersion-SNAPSHOT"
   },
-  libraryDependencies ++= Seq(
-    "org.scala-lang" % "scala-reflect" % scalaVersion.value,
-    "org.slf4j" % "slf4j-api" % version.value,
-    "org.scalatest" %% "scalatest" % "3.0.8" % Test,
-    "org.mockito" % "mockito-core" % "2.7.22" % Test,
-    "ch.qos.logback" % "logback-classic" % "1.2.3" % Test
-  ),
+  libraryDependencies ++= {
+    val slf4jVersion =
+      if(CiReleasePlugin.travisBranch == "master")
+        s"$latestSlf4jVersion-SNAPSHOT"
+      else if(CiReleasePlugin.isTravisTag)
+        version.value
+      else
+        s"$latestSlf4jVersion-SNAPSHOT"
+    Seq(
+      "org.scala-lang" % "scala-reflect" % scalaVersion.value,
+      "org.slf4j" % "slf4j-api" % slf4jVersion,
+      "org.scalatest" %% "scalatest" % "3.0.8" % Test,
+      "org.mockito" % "mockito-core" % "2.7.22" % Test,
+      "ch.qos.logback" % "logback-classic" % "1.2.3" % Test
+    )
+  },
   updateOptions := updateOptions.value.withGigahorse(false)
 )
 
