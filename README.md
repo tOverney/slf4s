@@ -2,4 +2,21 @@
 
 # About
 
-Fork of https://github.com/mattroberts297/slf4s until he releases for Scala 2.13.
+Fork of [Matt Roberts' slf4s](https://github.com/mattroberts297/slf4s) until he releases for Scala 2.13.
+
+## Released versions
+
+* 1.7.20
+* 1.7.21
+* 1.7.22
+* 1.7.23
+* 1.7.24
+* 1.7.25
+* 1.7.26
+
+## Released for Scala versions
+
+* 2.11
+* 2.12
+* 2.13
+
