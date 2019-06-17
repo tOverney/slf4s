@@ -36,11 +36,11 @@ lazy val slf4s = (project in file(".")).settings(
   libraryDependencies ++= {
     val slf4jVersion =
       if(CiReleasePlugin.travisBranch == "master")
-        s"$latestSlf4jVersion-SNAPSHOT"
+        latestSlf4jVersion
       else if(CiReleasePlugin.isTravisTag)
         version.value
       else
-        s"$latestSlf4jVersion-SNAPSHOT"
+        latestSlf4jVersion
     Seq(
       "org.scala-lang" % "scala-reflect" % scalaVersion.value,
       "org.slf4j" % "slf4j-api" % slf4jVersion,
