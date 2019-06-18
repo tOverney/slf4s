@@ -6,7 +6,6 @@ Fork of [Matt Roberts' slf4s](https://github.com/mattroberts297/slf4s) until he 
 
 ## Released versions
 
-* 1.7.20
 * 1.7.21
 * 1.7.22
 * 1.7.23
