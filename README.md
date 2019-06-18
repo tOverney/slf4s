@@ -4,6 +4,12 @@
 
 Fork of [Matt Roberts' slf4s](https://github.com/mattroberts297/slf4s) until he releases for Scala 2.13.
 
+## Usage
+
+```
+libraryDependencies += "ch.timo-schmid" %% "slf4s-api" % "1.7.26"
+```
+
 ## Released versions
 
 * 1.7.21
