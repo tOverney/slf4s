@@ -11,6 +11,8 @@ stages:
 
 jobs:
   include:
+    - os: linux
+      dist: trusty
     - env: TEST="test"
       script: sbt +test
     - env: TEST="coverage"
