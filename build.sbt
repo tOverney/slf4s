@@ -22,8 +22,8 @@ lazy val latestSlf4jVersion = "1.7.26"
 
 lazy val slf4s = (project in file(".")).settings(
   name := "slf4s-api",
-  scalaVersion := "2.12.8",
-  crossScalaVersions := List("2.13.0", "2.12.8", "2.11.12"),
+  scalaVersion := "2.12.10",
+  crossScalaVersions := List("2.13.1", "2.12.10", "2.11.12"),
   scalacOptions := Seq("-unchecked", "-deprecation", "-language:experimental.macros"),
   version := {
     if(CiReleasePlugin.travisBranch == "master")
