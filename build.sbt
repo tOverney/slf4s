@@ -18,7 +18,7 @@ inThisBuild(List(
   )
 ))
 
-lazy val latestSlf4jVersion = "1.7.26"
+lazy val latestSlf4jVersion = "1.7.27"
 
 lazy val slf4s = (project in file(".")).settings(
   name := "slf4s-api",
