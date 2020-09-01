@@ -16,4 +16,6 @@ project/target/
 .idea
 .idea_modules
 
+.metals
+
 local.*
