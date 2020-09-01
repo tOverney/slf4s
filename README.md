@@ -1,4 +1,6 @@
-[![Build Status](https://travis-ci.org/timo-schmid/slf4s.svg?branch=master)](https://travis-ci.org/timo-schmid/slf4s) [![Coverage Status](https://coveralls.io/repos/timo-schmid/slf4s/badge.svg?branch=master)](https://coveralls.io/r/timo-schmid/slf4s?branch=master)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/ch.timo-schmid/slf4s-api_2.13/badge.svg)](https://maven-badges.herokuapp.com/maven-central/ch.timo-schmid/slf4s-api_2.13)
+[![Build Status](https://travis-ci.org/timo-schmid/slf4s.svg?branch=master)](https://travis-ci.org/timo-schmid/slf4s)
+[![Coverage Status](https://coveralls.io/repos/timo-schmid/slf4s/badge.svg?branch=master)](https://coveralls.io/r/timo-schmid/slf4s?branch=master)
 
 # About
 
