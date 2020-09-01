@@ -9,7 +9,7 @@ Fork of [Matt Roberts' slf4s](https://github.com/mattroberts297/slf4s) until he 
 ## Usage
 
 ```
-libraryDependencies += "ch.timo-schmid" %% "slf4s-api" % "1.7.26"
+libraryDependencies += "ch.timo-schmid" %% "slf4s-api" % "1.7.30"
 ```
 
 ## Released versions
