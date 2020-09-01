@@ -18,10 +18,13 @@ libraryDependencies += "ch.timo-schmid" %% "slf4s-api" % "1.7.26"
 * 1.7.24
 * 1.7.25
 * 1.7.26
+* 1.7.27
+* 1.7.28
+* 1.7.29
+* 1.7.30
 
 ## Released for Scala versions
 
 * 2.11
 * 2.12
 * 2.13
-
