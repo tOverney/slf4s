@@ -9,14 +9,6 @@ stages:
   - name: test
   - name: release
     if: ((branch = master AND type = push) OR (tag IS present)) AND NOT fork
-  - name: notfork
-    if: NOT fork
-  - name: ismaster
-    if: branch = master
-  - name: ispush
-    if: type = push
-  - name: istag
-    if: tag IS present
 
 jobs:
   include:
@@ -26,14 +18,6 @@ jobs:
       script: sbt clean coverage test coverageReport coveralls
     - stage: release
       script: sbt clean ci-release
-    - stage: notfork
-      script: echo "not a fork"
-    - stage: ismaster
-      script: echo "is master"
-    - stage: ispush
-      script: echo "is push"
-    - stage: istag:
-      script: echo "is tag"
 
 cache:
   directories:
