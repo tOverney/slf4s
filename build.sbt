@@ -38,7 +38,7 @@ lazy val slf4s = (project in file(".")).settings(
       if(CiReleasePlugin.travisBranch == "master")
         latestSlf4jVersion
       else if(CiReleasePlugin.isTravisTag)
-        latestSlf4jVersion
+        version.value
       else
         latestSlf4jVersion
     Seq(
