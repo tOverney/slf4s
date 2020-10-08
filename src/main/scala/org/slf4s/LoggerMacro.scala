@@ -19,31 +19,35 @@ private object LoggerMacro {
   def traceM(c: Context { type PrefixType = Logger })(marker: c.Expr[Marker], msg: c.Expr[String]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isTraceEnabled(marker)) $underlying.trace($marker, $msg)"
+    q"if ($underlying.isTraceEnabled($marker)) $underlying.trace($marker, $msg)"
   }
 
   def traceMT(c: Context { type PrefixType = Logger })(marker: c.Expr[Marker], msg: c.Expr[String], t: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isTraceEnabled(marker)) $underlying.trace($marker, $msg, $t)"
+    q"if ($underlying.isTraceEnabled($marker)) $underlying.trace($marker, $msg, $t)"
   }
 
   def traceOM(c: Context { type PrefixType = Logger })(markerOpt: c.Expr[Option[Marker]], msg: c.Expr[String]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"""$markerOpt match {
-      case Some(marker) => if ($underlying.isTraceEnabled(marker)) $underlying.trace(marker, $msg)
-      case _ => if ($underlying.isTraceEnabled) $underlying.trace($msg)
-    }"""
+    q"""if ($markerOpt.isDefined) {
+          if ($underlying.isTraceEnabled($markerOpt.get)) $underlying.trace($markerOpt.get, $msg)
+        } else {
+          if ($underlying.isTraceEnabled) $underlying.trace($msg)
+        }
+    """
   }
 
   def traceOMT(c: Context { type PrefixType = Logger })(markerOpt: c.Expr[Option[Marker]], msg: c.Expr[String], t: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"""$markerOpt match {
-      case Some(marker) => if ($underlying.isTraceEnabled(marker)) $underlying.trace(marker, $msg, $t)
-      case _ => if ($underlying.isTraceEnabled) $underlying.trace($msg, $t)
-    }"""
+    q"""if ($markerOpt.isDefined) {
+          if ($underlying.isTraceEnabled($markerOpt.get)) $underlying.trace($markerOpt.get, $msg, $t)
+        } else {
+          if ($underlying.isTraceEnabled) $underlying.trace($msg, $t)
+        }
+    """
   }
 
   def debug(c: Context { type PrefixType = Logger })(msg: c.Expr[String]): c.universe.Tree = {
@@ -61,31 +65,35 @@ private object LoggerMacro {
   def debugM(c: Context { type PrefixType = Logger })(marker: c.Expr[Marker], msg: c.Expr[String]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isDebugEnabled(marker)) $underlying.debug($marker, $msg)"
+    q"if ($underlying.isDebugEnabled($marker)) $underlying.debug($marker, $msg)"
   }
 
   def debugMT(c: Context { type PrefixType = Logger })(marker: c.Expr[Marker], msg: c.Expr[String], t: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isDebugEnabled(marker)) $underlying.debug($marker, $msg, $t)"
+    q"if ($underlying.isDebugEnabled($marker)) $underlying.debug($marker, $msg, $t)"
   }
 
   def debugOM(c: Context { type PrefixType = Logger })(markerOpt: c.Expr[Option[Marker]], msg: c.Expr[String]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"""$markerOpt match {
-      case Some(marker) => if ($underlying.isDebugEnabled(marker)) $underlying.debug(marker, $msg)
-      case _ => if ($underlying.isDebugEnabled) $underlying.debug($msg)
-    }"""
+    q"""if ($markerOpt.isDefined) {
+          if ($underlying.isDebugEnabled($markerOpt.get)) $underlying.debug($markerOpt.get, $msg)
+        } else {
+          if ($underlying.isDebugEnabled) $underlying.debug($msg)
+        }
+    """
   }
 
   def debugOMT(c: Context { type PrefixType = Logger })(markerOpt: c.Expr[Option[Marker]], msg: c.Expr[String], t: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"""$markerOpt match {
-      case Some(marker) => if ($underlying.isDebugEnabled(marker)) $underlying.debug(marker, $msg, $t)
-      case _ => if ($underlying.isDebugEnabled) $underlying.debug($msg, $t)
-    }"""
+    q"""if ($markerOpt.isDefined) {
+          if ($underlying.isDebugEnabled($markerOpt.get)) $underlying.debug($markerOpt.get, $msg, $t)
+        } else {
+          if ($underlying.isDebugEnabled) $underlying.debug($msg, $t)
+        }
+    """
   }
 
   def info(c: Context { type PrefixType = Logger })(msg: c.Expr[String]): c.universe.Tree = {
@@ -103,31 +111,35 @@ private object LoggerMacro {
   def infoM(c: Context { type PrefixType = Logger })(marker: c.Expr[Marker], msg: c.Expr[String]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isInfoEnabled(marker)) $underlying.info($marker, $msg)"
+    q"if ($underlying.isInfoEnabled($marker)) $underlying.info($marker, $msg)"
   }
 
   def infoMT(c: Context { type PrefixType = Logger })(marker: c.Expr[Marker], msg: c.Expr[String], t: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isInfoEnabled(marker)) $underlying.info($marker, $msg, $t)"
+    q"if ($underlying.isInfoEnabled($marker)) $underlying.info($marker, $msg, $t)"
   }
 
   def infoOM(c: Context { type PrefixType = Logger })(markerOpt: c.Expr[Option[Marker]], msg: c.Expr[String]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"""$markerOpt match {
-      case Some(marker) => if ($underlying.isInfoEnabled(marker)) $underlying.info(marker, $msg)
-      case _ => if ($underlying.isInfoEnabled) $underlying.info($msg)
-    }"""
+    q"""if ($markerOpt.isDefined) {
+          if ($underlying.isInfoEnabled($markerOpt.get)) $underlying.info($markerOpt.get, $msg)
+        } else {
+          if ($underlying.isInfoEnabled) $underlying.info($msg)
+        }
+    """
   }
 
   def infoOMT(c: Context { type PrefixType = Logger })(markerOpt: c.Expr[Option[Marker]], msg: c.Expr[String], t: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"""$markerOpt match {
-      case Some(marker) => if ($underlying.isInfoEnabled(marker)) $underlying.info(marker, $msg, $t)
-      case _ => if ($underlying.isInfoEnabled) $underlying.info($msg, $t)
-    }"""
+    q"""if ($markerOpt.isDefined) {
+          if ($underlying.isInfoEnabled($markerOpt.get)) $underlying.info($markerOpt.get, $msg, $t)
+        } else {
+          if ($underlying.isInfoEnabled) $underlying.info($msg, $t)
+        }
+    """
   }
 
   def warn(c: Context { type PrefixType = Logger })(msg: c.Expr[String]): c.universe.Tree = {
@@ -145,33 +157,37 @@ private object LoggerMacro {
   def warnM(c: Context { type PrefixType = Logger })(marker: c.Expr[Marker], msg: c.Expr[String]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isWarnEnabled(marker)) $underlying.warn($marker, $msg)"
+    q"if ($underlying.isWarnEnabled($marker)) $underlying.warn($marker, $msg)"
   }
 
   def warnMT(c: Context { type PrefixType = Logger })(marker: c.Expr[Marker], msg: c.Expr[String], t: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isWarnEnabled(marker)) $underlying.warn($marker, $msg, $t)"
+    q"if ($underlying.isWarnEnabled($marker)) $underlying.warn($marker, $msg, $t)"
   }
 
   def warnOM(c: Context { type PrefixType = Logger })(markerOpt: c.Expr[Option[Marker]], msg: c.Expr[String]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"""$markerOpt match {
-      case Some(marker) => if ($underlying.isWarnEnabled(marker)) $underlying.warn(marker, $msg)
-      case _ => if ($underlying.isWarnEnabled) $underlying.warn($msg)
-    }"""
+    q"""if ($markerOpt.isDefined) {
+          if ($underlying.isWarnEnabled($markerOpt.get)) $underlying.warn($markerOpt.get, $msg)
+        } else {
+          if ($underlying.isWarnEnabled) $underlying.warn($msg)
+        }
+    """
   }
 
   def warnOMT(c: Context { type PrefixType = Logger })(markerOpt: c.Expr[Option[Marker]], msg: c.Expr[String], t: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"""$markerOpt match {
-      case Some(marker) => if ($underlying.isWarnEnabled(marker)) $underlying.warn(marker, $msg, $t)
-      case _ => if ($underlying.isWarnEnabled) $underlying.warn($msg, $t)
-    }"""
+    q"""if ($markerOpt.isDefined) {
+          if ($underlying.isWarnEnabled($markerOpt.get)) $underlying.warn($markerOpt.get, $msg, $t)
+        } else {
+          if ($underlying.isWarnEnabled) $underlying.warn($msg, $t)
+        }
+    """
   }
-
+  
   def error(c: Context { type PrefixType = Logger })(msg: c.Expr[String]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
@@ -187,30 +203,34 @@ private object LoggerMacro {
   def errorM(c: Context { type PrefixType = Logger })(marker: c.Expr[Marker], msg: c.Expr[String]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isErrorEnabled(marker)) $underlying.error($marker, $msg)"
+    q"if ($underlying.isErrorEnabled($marker)) $underlying.error($marker, $msg)"
   }
 
   def errorMT(c: Context { type PrefixType = Logger })(marker: c.Expr[Marker], msg: c.Expr[String], t: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"if ($underlying.isErrorEnabled(marker)) $underlying.error($marker, $msg, $t)"
+    q"if ($underlying.isErrorEnabled($marker)) $underlying.error($marker, $msg, $t)"
   }
 
   def errorOM(c: Context { type PrefixType = Logger })(markerOpt: c.Expr[Option[Marker]], msg: c.Expr[String]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"""$markerOpt match {
-      case Some(marker) => if ($underlying.isErrorEnabled(marker)) $underlying.error(marker, $msg)
-      case _ => if ($underlying.isErrorEnabled) $underlying.error($msg)
-    }"""
+    q"""if ($markerOpt.isDefined) {
+          if ($underlying.isErrorEnabled($markerOpt.get)) $underlying.error($markerOpt.get, $msg)
+        } else {
+          if ($underlying.isErrorEnabled) $underlying.error($msg)
+        }
+    """
   }
 
   def errorOMT(c: Context { type PrefixType = Logger })(markerOpt: c.Expr[Option[Marker]], msg: c.Expr[String], t: c.Expr[Throwable]): c.universe.Tree = {
     import c.universe._
     val underlying = q"${c.prefix}.underlying"
-    q"""$markerOpt match {
-      case Some(marker) => if ($underlying.isErrorEnabled(marker)) $underlying.error(marker, $msg, $t)
-      case _ => if ($underlying.isErrorEnabled) $underlying.error($msg, $t)
-    }"""
+    q"""if ($markerOpt.isDefined) {
+          if ($underlying.isErrorEnabled($markerOpt.get)) $underlying.error($markerOpt.get, $msg, $t)
+        } else {
+          if ($underlying.isErrorEnabled) $underlying.error($msg, $t)
+        }
+    """
   }
 }
