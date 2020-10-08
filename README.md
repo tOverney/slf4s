@@ -14,7 +14,7 @@ libraryDependencies += "ch.timo-schmid" %% "slf4s-api" % "1.7.30"
 
 ## Released versions
 
-* 1.7.30.1 (includes [#5](https://github.com/timo-schmid/slf4s/pull/5))
+* 1.7.30.2 (includes [#5](https://github.com/timo-schmid/slf4s/pull/5) & [#6](https://github.com/timo-schmid/slf4s/pull/6))
 * 1.7.30
 * 1.7.29
 * 1.7.28
